@@ -25,6 +25,11 @@ export const AutoResizeTextarea = React.forwardRef<
     <Textarea
       minH="unset"
       overflow="scroll"
+      sx={{
+        "::-webkit-scrollbar": {
+          display: "none",
+        },
+      }}
       w="100%"
       resize="none"
       ref={ref as React.RefObject<HTMLTextAreaElement>}

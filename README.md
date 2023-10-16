@@ -9,7 +9,7 @@
 
 The application levereges **RAG** (Retriever-Augumented-Generation) to deliver accurate and contextually relevant responses using **AI** and also takes advantage of  **LangChain**'s streaming support and async API to update the page in real time for multiple users.
 
-The next step for the app is to provide an **AI Agent ** capability, that aside docs it has also access and **can interact with different tools** from the **MultiversX Dev ecoystem**, **creating intuitive experience** for present and future builders. 
+The next step for the app is to provide an **AI Agent** capability, that aside docs it has also access and **can interact with different tools** from the **MultiversX Dev ecoystem**, **creating intuitive experience** for present and future builders. 
 
 ***❗xChat is in Proof of Concept state ❗***
 
@@ -55,7 +55,7 @@ NEXT_PUBLIC_API_BASE_URL =
 
 ##  Technical description
 
-The system comprises 3 principal elements: **Data Ingestion**, **Chat API **and **Client App**.
+The system comprises 3 principal elements: **Data Ingestion**, **Chat API** and **Client App**.
 
 ##### Ingestion (Python). Steps:
 
