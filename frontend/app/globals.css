@@ -1,0 +1,35 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  color: #131318;
+  background: #131318;
+}
+
+body input,
+body textarea {
+  color: black;
+}
+
+a {
+  color: #FFF;
+}
+
+a:hover {
+  border-bottom: 1px solid;
+}
+
+p {
+  margin: 8px 0;
+}
+
+code {
+  color: #ffa500;
+}
+
+li {
+  padding: 4px;
+}
+
+
