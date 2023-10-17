@@ -2,7 +2,7 @@ import packageJson from "@/package.json";
 
 export default function Footer() {
   return (
-    <div className="h-[120px] items-center mb-2 mt-5 text-white">
+    <div className=" items-center mt-5 text-white mb-5 relative">
       <div className="flex flex-col items-center justify-center container mx-auto text-center text-sm">
         <div className="font-bold">xChat v{`${packageJson.version}`}</div>
         <div className="text-xs font-light mt-2">

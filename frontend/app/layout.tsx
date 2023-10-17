@@ -1,7 +1,6 @@
 import "./globals.css";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-import { Authenticated } from "./components/ui/authenticated";
 import { ElvenInit } from "./components/ui/elven-init";
 
 const inter = Inter({ subsets: ["latin"] });
@@ -43,9 +42,7 @@ export default function RootLayout({
         style={{ background: "#262629" }}
       >
         <ElvenInit />
-        <div className={`flex flex-col md:p-8`}>
-          <Authenticated>{children}</Authenticated>
-        </div>
+        <div className={`flex flex-col h-full`}>{children}</div>
       </body>
     </html>
   );

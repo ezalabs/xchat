@@ -1,11 +1,11 @@
 "use client";
 
 import { FC, useState } from "react";
-import { useLogin, useLoginInfo, useLogout } from "@useelven/core";
+import { useLogin, useLogout } from "@useelven/core";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "./dialog";
 import { useEffectOnlyOnUpdate } from "@/app/hooks/use-effect-only-on-update";
 import { LoginComponent } from "./login-component";
-import CustomButton from "./button";
+import { Button, IconButton } from "./button";
 
 interface LoginModalButtonProps {
   onClose?: () => void;
@@ -45,9 +45,9 @@ export const LoginModalButton: FC<LoginModalButtonProps> = ({
   return (
     <Dialog open={isOpen} onOpenChange={onCloseComplete}>
       {isLoggedIn ? (
-        <CustomButton outline={true} text={"Logout"} onClick={() => logout()} />
+        <IconButton onClick={() => logout()} type="logout" />
       ) : (
-        <CustomButton
+        <Button
           text={isLoggingIn ? "Connecting..." : "Connect"}
           onClick={handleOpen}
         />

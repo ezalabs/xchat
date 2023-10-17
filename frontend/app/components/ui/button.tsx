@@ -1,44 +1,69 @@
-import { Button } from "@chakra-ui/react";
+import { Button as B, IconButton as IB, Icon } from "@chakra-ui/react";
 import Link from "next/link";
 import { MouseEventHandler } from "react";
+import { MdLogout, MdAccountBox } from "react-icons/md";
 
-export default function CustomButton(props: {
-  text: string;
-  onClick?: MouseEventHandler<HTMLButtonElement>;
-  href?: string;
-  outline?: boolean;
-}) {
-  const { text, onClick, href, outline } = props;
+export function LinkButton(props: { href: string; text: string }) {
+  const { href, text } = props;
 
-  return href ? (
+  return (
     <Link
       href={href}
       passHref
       rel="noopener noreferrer nofollow"
       target="_blank"
     >
-      <Button as="a" background={"#20f6d8"} color={"#131313"}>
+      <B as="a" background={"#20f6d8"} color={"#131313"}>
         {text}
-      </Button>
+      </B>
     </Link>
-  ) : outline ? (
-    <Button
-      onClick={onClick}
-      background={""}
-      outlineColor={"rgba(35, 246, 218, 0.23)"}
-      color={"white"}
+  );
+}
+
+export function IconButton(props: {
+  type: "logout" | "account";
+  text?: string;
+  onClick?: MouseEventHandler<HTMLButtonElement>;
+}) {
+  let type;
+
+  switch (props.type) {
+    case "logout":
+      type = MdLogout;
+      break;
+    case "account":
+      type = MdAccountBox;
+      break;
+  }
+
+  return (
+    <IB
+      aria-label={props.type}
+      onClick={props.onClick}
+      background={"#20f6d8"}
+      color={"#131313"}
       _hover={{ bg: "rgba(35, 246, 218, 0.23)" }}
+      icon={<Icon w={5} h={5} as={type} />}
     >
-      {text}
-    </Button>
-  ) : (
-    <Button
+      {props.text}
+    </IB>
+  );
+}
+
+export function Button(props: {
+  text: string;
+  onClick?: MouseEventHandler<HTMLButtonElement>;
+}) {
+  const { text, onClick } = props;
+
+  return (
+    <B
       onClick={onClick}
       background={"#20f6d8"}
       color={"#131313"}
       _hover={{ bg: "rgba(35, 246, 218, 0.23)" }}
     >
       {text}
-    </Button>
+    </B>
   );
 }

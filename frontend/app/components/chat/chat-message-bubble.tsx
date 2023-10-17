@@ -1,14 +1,7 @@
 import "react-toastify/dist/ReactToastify.css";
 import { useState } from "react";
 import { SourceBubble, Source } from "./source-bubble";
-import {
-  VStack,
-  Flex,
-  Heading,
-  HStack,
-  Box,
-  Divider,
-} from "@chakra-ui/react";
+import { VStack, Flex, Heading, HStack, Box, Divider } from "@chakra-ui/react";
 import { InlineCitation } from "./inline-citation";
 
 export type Message = {
@@ -109,6 +102,7 @@ export function ChatMessageBubble(props: {
   messageCompleted: boolean;
 }) {
   const { role, content, runId } = props.message;
+  const { isMostRecent } = props;
   const isUser = role === "user";
 
   const sources = props.message.sources ?? [];
@@ -179,12 +173,23 @@ export function ChatMessageBubble(props: {
           {content}
         </Heading>
       ) : (
-        <Box className="whitespace-pre-wrap" color="white">
+        <Box
+          className="whitespace-pre-wrap"
+          style={{ marginBottom: isMostRecent ? 10 : 0 }}
+          color="white"
+        >
           {answerElements}
         </Box>
       )}
-
-      {!isUser && <Divider borderColor={"rgba(35, 246, 218, 0.5)"} mt={5} />}
+      {!isUser && !isMostRecent && (
+        <Divider
+          borderColor={"rgba(35, 246, 218, 0.8)"}
+          style={{
+            boxShadow: "0px 0px 20px #20f6d8",
+          }}
+          mt={2}
+        />
+      )}
     </VStack>
   );
 }

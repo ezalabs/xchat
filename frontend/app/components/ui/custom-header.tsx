@@ -5,23 +5,37 @@ import Link from "next/link";
 import { TokenTransfer } from "@multiversx/sdk-core";
 import { LoginModalButton } from "./login-modal-button";
 import { useAccount, useConfig, useLogin, useLoginInfo } from "@useelven/core";
-import CustomButton from "./button";
+import { Button, IconButton } from "./button";
 import { isMobile } from "@/app/utils/isMobile";
 import { shortenHash } from "@/app/utils/shortenHash";
 import { useState } from "react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "./dialog";
+import Logo from "./logo";
+import {
+  marginHorizMobile,
+  marginHorizWeb,
+  marginTopNavbarMobile,
+  marginTopNavbarWeb,
+  headerHeightMobile,
+  headerHeightWeb,
+} from "@/app/utils/constants";
 
 export const CustomHeader = () => {
-  const marginX = isMobile() ? 2 : 25;
-
-  const network = process.env.NEXT_PUBLIC_MULTIVERSX_CHAIN;
-
   const { address, nonce, balance, activeGuardianAddress } = useAccount();
   const { explorerAddress } = useConfig();
-  const { isLoggedIn } = useLogin();
+  let { isLoggedIn } = useLogin();
   const { loginMethod, expires, loginToken, signature } = useLoginInfo();
 
   const showNonce = false;
+
+  isLoggedIn = true;
+
+  const marginX = isMobile() ? marginHorizMobile : marginHorizWeb;
+  const marginTopNavbar = isMobile()
+    ? marginTopNavbarMobile
+    : marginTopNavbarWeb;
+
+  const height = isMobile() ? headerHeightMobile : headerHeightWeb;
 
   const [isOpen, setIsOpen] = useState(false);
 
@@ -35,14 +49,14 @@ export const CustomHeader = () => {
     }
   };
 
-  function renderAddressButton() {
+  function renderAccountButton() {
     return (
       <>
-        <CustomButton
-          onClick={handleOpen}
-          outline={true}
-          text={shortenHash(address, 6)}
-        />
+        {isMobile() ? (
+          <IconButton type="account" onClick={handleOpen} />
+        ) : (
+          <Button onClick={handleOpen} text={shortenHash(address, 6)} />
+        )}
         <Dialog open={isOpen} onOpenChange={onCloseComplete}>
           <DialogContent
             className="max-w-xs sm:max-w-lg text-white p-0"
@@ -112,27 +126,37 @@ export const CustomHeader = () => {
   }
 
   return (
-    <div className={`flex items-center w-auto mx-${marginX} mt-2 flex-col`}>
-      <div className="flex flex-1 flex-row w-auto mb-5">
+    <div
+      style={{
+        position: "sticky",
+        backgroundColor: "#262629",
+        zIndex: 1,
+        boxShadow: "0px 0px 15px #20f6d8",
+        top: 0,
+        paddingBottom: 2,
+        height: height,
+      }}
+    >
+      <div
+        style={{
+          marginLeft: marginX,
+          marginRight: marginX,
+          marginTop: marginTopNavbar,
+        }}
+        className={`flex items-center w-auto flex-${
+          isLoggedIn ? "row" : "col"
+        } justify-between`}
+      >
         <div>
-          <p
-            className="cursor-pointer text-4xl font-black text-center"
-            style={{ color: "#20f6d8" }}
-          >
-            x<span style={{ color: "white" }}>Chat</span>
-          </p>
-          <p style={{ color: "white", textAlign: "center", fontSize: 15 }}>
-            <span style={{ color: "#AAFF00" }}>● </span>
-            {network}
-          </p>
+          <Logo />
         </div>
+        {isLoggedIn && (
+          <div className="flex flex-row space-x-5">
+            {renderAccountButton()}
+            <LoginModalButton />
+          </div>
+        )}
       </div>
-      {isLoggedIn && (
-        <div className="flex flex-row space-x-5">
-          {renderAddressButton()}
-          <LoginModalButton />
-        </div>
-      )}
     </div>
   );
 };

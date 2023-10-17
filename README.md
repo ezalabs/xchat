@@ -62,7 +62,7 @@ The system comprises 3 principal elements: **Data Ingestion**, **Chat API** and 
 * Pull all html pages from documentation site as well as the API page
 * Pull MultiversX Whitepaper (not yet implemented)
 * Load, parse and split documents using Langchain tools
-* Create Embeddings (with OpenAI) from the documents and persiste them to the Vector Store (Supabase)
+* Create Embeddings (with OpenAI) from the documents and persist them to the Vector Store (Supabase)
 
 ##### Chat API endpoint (Python). Steps:
 

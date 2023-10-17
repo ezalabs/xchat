@@ -22,6 +22,12 @@ import {
 import { ArrowUpIcon } from "@chakra-ui/icons";
 import { Source } from "./source-bubble";
 import { isMobile } from "@/app/utils/isMobile";
+import {
+  marginHorizMobile,
+  marginHorizWeb,
+  headerHeightMobile,
+  headerHeightWeb,
+} from "@/app/utils/constants";
 
 export function ChatWindow() {
   const conversationId = uuidv4();
@@ -35,6 +41,9 @@ export function ChatWindow() {
   >([]);
 
   const apiBaseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
+  const marginX = isMobile() ? marginHorizMobile : marginHorizWeb;
+  const height = isMobile() ? headerHeightMobile : headerHeightWeb;
+  const viewport = isMobile() ? '90vh' : '95vh'
 
   const sendMessage = async (message?: string) => {
     if (messageContainerRef.current) {
@@ -165,14 +174,17 @@ export function ChatWindow() {
     await sendMessage(question);
   };
 
-  const marginX = isMobile() ? 2 : 25;
-
   return (
     <div
-      className={`flex flex-col items-center py-5 rounded grow max-h-full mx-${marginX}`}
+      style={{
+        marginLeft: marginX,
+        marginRight: marginX,
+        maxHeight: `calc(${viewport} - ${height})`,
+      }}
+      className={`flex flex-col items-center rounded grow`}
     >
       <div
-        className="flex flex-col-reverse w-full mb-2 overflow-auto"
+        className="flex flex-col-reverse w-full overflow-auto pt-5"
         ref={messageContainerRef}
       >
         {messages.length > 0 ? (
@@ -184,13 +196,24 @@ export function ChatWindow() {
                 message={{ ...m }}
                 isMostRecent={index === 0}
                 messageCompleted={!isLoading}
-              ></ChatMessageBubble>
+              />
             ))
         ) : (
           <EmptyState onChoice={sendInitialQuestion} />
         )}
       </div>
-      <InputGroup size="md" alignItems={"center"} marginTop={5}>
+      <InputGroup
+        size="md"
+        alignItems={"center"}
+        style={{
+          backgroundColor: "#262629",
+          position: "sticky",
+          zIndex: 1,
+          bottom: 5,
+          boxShadow: "0px 0px 15px #20f6d8",
+          borderRadius: 8,
+        }}
+      >
         <AutoResizeTextarea
           value={input}
           maxRows={5}
@@ -215,7 +238,7 @@ export function ChatWindow() {
             color={"#262629"}
             rounded={"full"}
             aria-label="Send"
-            icon={isLoading ? <Spinner /> : <ArrowUpIcon />}
+            icon={isLoading ? <Spinner /> : <ArrowUpIcon w={5} h={5} />}
             type="submit"
             onClick={(e) => {
               e.preventDefault();

@@ -5,7 +5,7 @@ import { WalletConnectPairings } from "./walletconnect-pairings";
 import { Spinner } from "./spinner";
 import { getLoginMethodDeviceName } from "@/app/utils/getSigningDeviceName";
 
-import CustomButton from "./button";
+import { Button } from "./button";
 
 export const LoginComponent = memo(() => {
   const {
@@ -56,7 +56,7 @@ export const LoginComponent = memo(() => {
         </div>
       ) : (
         <div className="flex flex-col gap-4 items-center px-8">
-          <CustomButton
+          <Button
             text={
               loginMethod === LoginMethodsEnum.walletconnect && walletConnectUri
                 ? "Reset QR code"

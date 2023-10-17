@@ -1,8 +1,8 @@
-import { useEffect, useState, FunctionComponent } from 'react';
-import { useConfig } from '@useelven/core';
-import QRCode from 'qrcode';
-import { isMobile } from '@/app/utils/isMobile';
-import CustomButton from './button';
+import { useEffect, useState, FunctionComponent } from "react";
+import { useConfig } from "@useelven/core";
+import QRCode from "qrcode";
+import { isMobile } from "@/app/utils/isMobile";
+import { LinkButton } from "./button";
 
 interface WalletConnectQRCodeProps {
   uri: string;
@@ -11,18 +11,18 @@ interface WalletConnectQRCodeProps {
 export const WalletConnectQRCode: FunctionComponent<
   WalletConnectQRCodeProps
 > = ({ uri }) => {
-  const [qrCodeSvg, setQrCodeSvg] = useState('');
+  const [qrCodeSvg, setQrCodeSvg] = useState("");
   const { walletConnectDeepLink } = useConfig();
 
   useEffect(() => {
     const generateQRCode = async () => {
       if (!uri) {
-        setQrCodeSvg('<div>dupa</div>');
+        setQrCodeSvg("<div>dupa</div>");
         return;
       }
 
       const svg = await QRCode.toString(uri, {
-        type: 'svg',
+        type: "svg",
       });
 
       setQrCodeSvg(svg);
@@ -36,7 +36,7 @@ export const WalletConnectQRCode: FunctionComponent<
     <div>
       {mobile ? (
         <div className="flex justify-center w-full mb-6">
-          <CustomButton
+          <LinkButton
             text={"Go to xPortal to sign in!"}
             href={`${walletConnectDeepLink}?wallet-connect=${encodeURIComponent(
               uri,
