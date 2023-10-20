@@ -52,12 +52,14 @@ export function IconButton(props: {
 
 export function Button(props: {
   text: string;
+  isLoading?: boolean;
   onClick?: MouseEventHandler<HTMLButtonElement>;
 }) {
-  const { text, onClick } = props;
+  const { text, isLoading, onClick } = props;
 
   return (
     <B
+      isLoading={isLoading}
       onClick={onClick}
       background={"#20f6d8"}
       color={"#131313"}

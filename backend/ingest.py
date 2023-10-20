@@ -6,13 +6,15 @@ import re
 from html_parser import html_docs_extractor
 
 from bs4 import BeautifulSoup, SoupStrainer
-from langchain.document_loaders import RecursiveUrlLoader, SitemapLoader
+from langchain.document_loaders import RecursiveUrlLoader, SitemapLoader, PyPDFLoader
 from langchain.embeddings import OpenAIEmbeddings
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain.utils.html import PREFIXES_TO_IGNORE_REGEX, SUFFIXES_TO_IGNORE_REGEX
 
 from langchain.vectorstores import SupabaseVectorStore
 from supabase.client import create_client
+import requests
+import numpy as np
 
 from dotenv import load_dotenv
 
@@ -44,7 +46,7 @@ def metadata_extractor(meta: dict, soup: BeautifulSoup) -> dict:
     }
 
 
-def load_multiversx_docs():
+def load_multiversx_web_docs():
     return SitemapLoader(
         WEB_DOCS_MAIN_PATH + "sitemap.xml",
         filter_urls=[WEB_DOCS_MAIN_PATH],
@@ -64,7 +66,7 @@ def simple_extractor(html: str) -> str:
     return re.sub(r"\n\n+", "\n\n", soup.text).strip()
 
 
-def load_api_docs():
+def load_multiversx_api_docs():
     return RecursiveUrlLoader(
         url=WEB_API_MAIN_PATH,
         max_depth=8,
@@ -81,15 +83,31 @@ def load_api_docs():
     ).load()
 
 
+def load_multiversx_whitepaper():
+    response = requests.get(WHITEPAPER_PATH)
+    with open("whitepaper.pdf", "wb") as f:
+        f.write(response.content)
+
+    docs = PyPDFLoader("whitepaper.pdf").load()
+
+    for i, doc in enumerate(docs):
+        doc.metadata["source"] = WHITEPAPER_PATH
+        doc.metadata["title"] = "MultiversX Whitepaper"
+
+    return docs
+
+
 def ingest_docs():
-    docs_from_documentation = load_multiversx_docs()
+    docs_from_documentation = load_multiversx_web_docs()
     logger.info(f"Loaded {len(docs_from_documentation)} docs from documentation")
-    docs_from_api = load_api_docs()
+    docs_from_api = load_multiversx_api_docs()
     logger.info(f"Loaded {len(docs_from_api)} docs from API")
+    docs_from_whitepaper = load_multiversx_whitepaper()
+    logger.info(f"Loaded {len(docs_from_whitepaper)} docs from Whitepaper")
 
     text_splitter = RecursiveCharacterTextSplitter(chunk_size=4000, chunk_overlap=200)
     docs_transformed = text_splitter.split_documents(
-        docs_from_documentation + docs_from_api
+        docs_from_documentation + docs_from_api + docs_from_whitepaper
     )
 
     for doc in docs_transformed:
@@ -114,15 +132,12 @@ def ingest_docs():
 
     numOfIngestedDocs = 0
 
-    for docs in split_list(docs_transformed):
+    split_docs_lists = np.array_split(docs_transformed, 4)
+
+    for docs in split_docs_lists:
         numOfIngestedDocs += len(vectorstore.add_documents(docs))
 
     logger.info("Number of ingested vectors: " + str(numOfIngestedDocs))
-
-
-def split_list(a_list):
-    half = len(a_list) // 2
-    return a_list[:half], a_list[half:]
 
 
 if __name__ == "__main__":

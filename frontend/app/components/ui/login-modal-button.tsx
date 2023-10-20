@@ -6,6 +6,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle } from "./dialog";
 import { useEffectOnlyOnUpdate } from "@/app/hooks/use-effect-only-on-update";
 import { LoginComponent } from "./login-component";
 import { Button, IconButton } from "./button";
+import Typed from "react-typed";
 
 interface LoginModalButtonProps {
   onClose?: () => void;
@@ -57,7 +58,14 @@ export const LoginModalButton: FC<LoginModalButtonProps> = ({
         style={{ background: "#262629", borderColor: "#36363b" }}
       >
         <DialogHeader className="px-6 pt-6">
-          <DialogTitle>Connect your wallet</DialogTitle>
+          <DialogTitle>
+            <Typed
+              showCursor={true}
+              cursorChar="."
+              strings={["Connect your wallet"]}
+              typeSpeed={40}
+            />
+          </DialogTitle>
         </DialogHeader>
         <div className="grid gap-4 overflow-y-auto max-h-[calc(100vh-160px)] p-6 pb-8">
           <LoginComponent />

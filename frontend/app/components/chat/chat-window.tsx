@@ -103,6 +103,7 @@ export function ChatWindow() {
         onerror(err) {
           throw err;
         },
+        openWhenHidden: true,
         onmessage(msg) {
           if (msg.event === "end") {
             setChatHistory((prevChatHistory) => [
@@ -208,6 +209,7 @@ export function ChatWindow() {
         style={{
           backgroundColor: "#262629",
           position: "sticky",
+          marginTop: messages.length == 0 ? isMobile() ? 35 : 10 : 0,
           zIndex: 1,
           bottom: 5,
           boxShadow: "0px 0px 15px #20f6d8",

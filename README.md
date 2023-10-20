@@ -98,10 +98,18 @@ The system comprises 3 principal elements: **Data Ingestion**, **Chat API** and 
 #### References
 
 [MultiversX Docs](https://docs.multiversx.com/)
+
+[OpenAI](https://openai.com/blog/openai-api)
+
 [Next.js](https://nextjs.org)
+
 [useElven](https://www.useelven.com/)
+
 [FastAPI](https://fastapi.tiangolo.com/)
+
 [LangChain](https://github.com/hwchase17/langchain/)
+
 [ChatLangchain](https://github.com/langchain-ai/chat-langchain/)
+
 [supabase](https://supabase.com/)
 

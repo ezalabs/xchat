@@ -9,10 +9,10 @@ import {
 } from "@chakra-ui/react";
 
 const sampleQuestions: string[] = [
-  "What is ESDT?",
-  "What SDKs are available?",
-  "How to install mxpy?",
-  "How to use webwallet?",
+  "What does ESDT represent?",
+  "Can you explain adaptive state sharding?",
+  "How to install mxpy? Some examples of usage?",
+  "How to make transfers with Javascript SDK?",
 ];
 
 export function EmptyState(props: { onChoice: (question: string) => any }) {
@@ -20,8 +20,7 @@ export function EmptyState(props: { onChoice: (question: string) => any }) {
     props.onChoice((e.target as HTMLDivElement).innerText);
   };
 
-  const QuestionCard = (props: { text: string, key: string | number }) => {
-
+  const QuestionCard = (props: { text: string; key: string | number }) => {
     const { text, key } = props;
 
     return (
@@ -93,15 +92,15 @@ export function EmptyState(props: { onChoice: (question: string) => any }) {
         marginTop={"10px"}
         textAlign={"center"}
       >
-        Ask me anything about MultiversX&apos;s{" "}
+        Ask me anything about{" "}
         <Link
           href="https://docs.multiversx.com/"
           target="_blank"
           color={"#20f6d8"}
         >
-          documentation!
+          MultiversX!
         </Link>
-        <p className="s">Example questions:</p>
+        <p className="s">Frequently asked questions:</p>
       </Heading>
       {renderSampleQuestions()}
     </div>
