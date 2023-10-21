@@ -2,8 +2,6 @@
 
 ![Alt text](readme-cover.png)
 
-**Deployed version: [xchat.ezalabs.io](https://xchat.ezalabs.io)**
-
 
 **xChat** is a **NLP** (Natural Language Processing) & **context aware** web chatbot, specifically engineered for handling MultiversX's repository of **knowledge and documentation** leveraging the power of **LLMs**. Designed to interact with users of all technical proficiencies, it utilizes the extensive online MX Docs to provide assistance. Moreover, xChat serves as an ideal starting point for new developers joining the **MultiversX Dev Ecosystem** using **xPortal** access system.
 
@@ -11,7 +9,10 @@ The application levereges **RAG** (Retriever-Augumented-Generation) to deliver a
 
 The next step for the app is to provide an **AI Agent** capability, that aside docs it has also access and **can interact with different tools** from the **MultiversX Dev ecoystem**, **creating intuitive experience** for present and future builders. 
 
+
 ***❗xChat is in Proof of Concept state ❗***
+
+** ⏯️ Short DEMO video of the app here: [YouTube](https://www.youtube.com/watch?v=R0eVW55Y7Ow) **
 
 
 ##  Running locally
