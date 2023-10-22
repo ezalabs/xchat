@@ -88,7 +88,7 @@ The system comprises 3 principal elements: **Data Ingestion**, **Chat API** and 
 * Improve UI / UX
 * Improve LLM request templating to deliver more accurate responses
 * Resolve current React reload issues
-* Create new function to ingest MultiversX Whitepaper
+* Create new function to ingest MultiversX Whitepaper (DONE)
 * Plan to develop the AI Agent feature
 
 
